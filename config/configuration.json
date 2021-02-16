@@ -1,0 +1,20 @@
+{
+  "database"  : {
+    "database"  : "livestock_finder",
+    "username"  : "livestock_finder",
+    "password"  : "sMRgs2CSFm^D95_=",
+    "server"    : "127.0.0.1",
+    "charset"   : "latin1"
+  },
+  "database_options"  : {
+    "PDO::ATTR_PERSISTENT"      : true,
+    "PDO::ATTR_ERR_MODE"        : "PDO::ERRMODE_EXCEPTION",
+    "PDO::ATTR_EMULATE_PREPARES": false
+  },
+  "salt_options"  : {
+    "threads"     : 3,
+    "memory_cost" : 2048,
+    "time_cost"   : 4
+  },
+  "admin_session_name"    : "livestock_finder_user"
+}

@@ -20,7 +20,7 @@
          */
         public function __construct ( $user = null ) {
             $this->_db = Database::get_instance();
-            $this->_session_name = Config::get_instance()->get( 'admin_session' );
+            $this->_session_name = Config::get_instance()->get( 'admin_session_name' );
 
             if ( !$user ) {
                 if ( Session::exists( $this->_session_name ) ) {
@@ -83,7 +83,7 @@
          * @return mixed
          */
         public function get_users() {
-            $sql = 'select user_id, email, username, first_name, last_name, active, date_created from ' .
+            $sql = 'select user_id, email, username, first_name, last_name, deleted, date_created from ' .
                 $this->_table_name . ' order by first_name, last_name';
 
             return $this->_db->query( $sql )->results();
@@ -100,12 +100,14 @@
             $user = $this->find( $username );
 
             if ( $user ) {
-                if ( Hash::verify_password( $_password, $this->data()->user_pass ) ) {
-                    Session::put( $this->_session_name, $this->data()->user_id );
-                    $this->_is_signed_in = true;
+                if ( $this->data()->deletd === 'no' ) {
+                    if ( Hash::verify_password( $_password, $this->data()->user_pass ) ) {
+                        Session::put( $this->_session_name, $this->data()->user_id );
+                        $this->_is_signed_in = true;
 
-                    return true;
+                        return true;
 
+                    }
                 }
             }
 
